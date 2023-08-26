@@ -1,6 +1,11 @@
-const webpack = require("webpack");
+import webpack from "webpack";
+import path from 'path';
+import {fileURLToPath} from 'url';
 
-module.exports = {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const config = {
   mode: "development",
   entry: ["@babel/polyfill", "./samples/index.js"],
   output: {
@@ -15,7 +20,10 @@ module.exports = {
       {
         test: /\.(jsx?)$/,
         exclude: /(node_modules)/,
-        loader: "babel-loader"
+        loader: "babel-loader",
+        resolve: {
+          fullySpecified: false,
+        }
       },
       {
         test: /\.css$/,
@@ -32,7 +40,9 @@ module.exports = {
 
   devServer: {
     host: "localhost",
-    contentBase: "./public",
+    static: './public',
     hot: true
   }
 };
+
+export default config;
